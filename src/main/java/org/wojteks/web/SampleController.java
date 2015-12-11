@@ -22,8 +22,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.wojteks.domain.City;
 import org.wojteks.service.CityService;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -32,6 +34,10 @@ public class SampleController {
 
 	@Autowired
 	private CityService cityService;
+
+	@Autowired
+	@Resource(name = "showExampleCity2")
+	private City city;
 
 	@RequestMapping("/")
 	@ResponseBody
@@ -42,6 +48,7 @@ public class SampleController {
 // return this.cityService.getCity("Bath", "UK").getName();
 		modelAndView.setViewName("sample");
 		modelAndView.addObject("message", cityService.getCity("Bath", "UK").getName());
+		modelAndView.addObject("city", city.getName());
 		return modelAndView;
 
 	}
