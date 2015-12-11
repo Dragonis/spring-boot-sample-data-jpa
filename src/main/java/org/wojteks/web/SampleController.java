@@ -21,7 +21,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.wojteks.service.CityService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class SampleController {
@@ -32,8 +36,13 @@ public class SampleController {
 	@RequestMapping("/")
 	@ResponseBody
 	@Transactional(readOnly = true)
-	public String helloWorld() {
-		return this.cityService.getCity("Bath", "UK").getName();
+	public ModelAndView helloWorld(HttpServletRequest request,
+							 HttpServletResponse response) {
+		ModelAndView modelAndView = new ModelAndView();
+// return this.cityService.getCity("Bath", "UK").getName();
+		modelAndView.setViewName("sample");
+		modelAndView.addObject("message", cityService.getCity("Bath", "UK").getName());
+		return modelAndView;
 
 	}
 
